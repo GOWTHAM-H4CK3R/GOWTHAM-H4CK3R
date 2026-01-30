@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plate Heat Exchanger - Comprehensive Guide</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0f172a;
+            --secondary: #1e293b;
+            --accent: #f97316;
+            --accent-light: #fed7aa;
+            --text: #f1f5f9;
+            --text-muted: #cbd5e1;
+            --border: #334155;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'IBM Plex Mono', monospace;
+            background: linear-gradient(135deg, var(--primary) 0%, #1a1f35 100%);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            padding: 1rem 2rem;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-family: 'Syne', sans-serif;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            margin-top: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(249, 115, 22, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            background: linear-gradient(135deg, var(--accent-light) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, var(--accent) 0%, #fb923c 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-family: 'Syne', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(249, 115, 22, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(249, 115, 22, 0.5);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        section {
+            padding: 6rem 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-light);
+        }
+
+        h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 1.5rem 0 1rem;
+            color: var(--accent);
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        /* Grid Layout */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .card {
+            background: linear-gradient(135deg, var(--secondary) 0%, rgba(30, 41, 59, 0.5) 100%);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(249, 115, 22, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .card:hover::before {
+            left: 100%;
+        }
+
+        .card:hover {
+            border-color: var(--accent);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(249, 115, 22, 0.2);
+        }
+
+        .card h3 {
+            margin-top: 0;
+        }
+
+        .icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Features Section */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .feature-item {
+            display: flex;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            background: rgba(30, 41, 59, 0.5);
+            border-left: 3px solid var(--accent);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover {
+            background: rgba(30, 41, 59, 0.8);
+            transform: translateX(10px);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            flex-shrink: 0;
+            color: var(--accent);
+        }
+
+        .feature-content h4 {
+            font-family: 'Syne', sans-serif;
+            color: var(--accent-light);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .feature-content p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: var(--secondary);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .comparison-table th {
+            background: linear-gradient(135deg, var(--accent) 0%, #fb923c 100%);
+            padding: 1.5rem;
+            text-align: left;
+            font-family: 'Syne', sans-serif;
+            font-weight: 600;
+            color: white;
+        }
+
+        .comparison-table td {
+            padding: 1.2rem 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .comparison-table tr:hover {
+            background: rgba(249, 115, 22, 0.05);
+        }
+
+        /* Specifications */
+        .spec-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .spec-item {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+
+        .spec-label {
+            font-family: 'Syne', sans-serif;
+            color: var(--accent);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .spec-value {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        /* Advantages List */
+        .advantages-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .advantage-item {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .advantage-check {
+            color: var(--success);
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .advantage-text {
+            color: var(--text);
+        }
+
+        /* Code Block */
+        .code-block {
+            background: var(--primary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            overflow-x: auto;
+            margin: 2rem 0;
+        }
+
+        .code-block code {
+            color: var(--accent-light);
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* Application Cards */
+        .applications-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .app-card {
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.1), rgba(30, 41, 59, 0.8));
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .app-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+        }
+
+        .app-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .app-card h4 {
+            font-family: 'Syne', sans-serif;
+            color: var(--accent-light);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary);
+            border-top: 1px solid var(--border);
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-section h4 {
+            font-family: 'Syne', sans-serif;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .footer-section p, .footer-section li {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(30px); }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-in {
+            animation: slideInUp 0.6s ease-out forwards;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.8rem;
+            }
+
+            .advantages-list {
+                grid-template-columns: 1fr;
+            }
+
+            .spec-box {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Scroll to Top Button */
+        .scroll-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--accent) 0%, #fb923c 100%);
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 10px 30px rgba(249, 115, 22, 0.3);
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+
+        .scroll-top.show {
+            display: flex;
+        }
+
+        .scroll-top:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(249, 115, 22, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div> <img src="https://www.unitedheatexchangers.com/images/logo.webp" alt="heat exchanger manufacturer in INDIA" width="100%" border="0" class="logomobile"> </div>
+            <ul class="nav-links">
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#advantages">Advantages</a></li>
+                <li><a href="#design">Design Types</a></li>
+                <li><a href="#applications">Applications</a></li>
+                <li><a href="#technical">Technical</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <div class="hero-content">
+            <h1><a href="https://www.unitedheatexchangers.com/heat-exchanger/plate-heat-exchanger/">Plate Heat Exchanger</a></h1>
+            <p>Efficient thermal energy exchange at the intersection of engineering and innovation</p>
+            <button class="cta-button" onclick="document.getElementById('overview').scrollIntoView()">Explore Now</button>
+        </div>
+    </div>
+
+    <!-- Overview Section -->
+    <section id="overview" class="container">
+        <h2>What is a Plate Heat Exchanger?</h2>
+        <div class="grid">
+            <div class="card">
+                <div class="icon"></div>
+                <h3>Core Function</h3>
+                <p>A <a href="https://www.unitedheatexchangers.com/heat-exchanger/plate-heat-exchanger/">plate heat exchanger</a> (PHE) is a device designed to transfer heat between two fluids with minimal contact. It consists of a series of thin corrugated metal plates that facilitate efficient thermal energy exchange.</p>
+            </div>
+            <div class="card">
+                <div class="icon"></div>
+                <h3>How It Works</h3>
+                <p>Hot and cold fluids flow alternately between corrugated metal plates. The thin walls and turbulent flow pattern maximize heat transfer efficiency, enabling rapid temperature equilibration between the two fluid streams.</p>
+            </div>
+            <div class="card">
+                <div class="icon"></div>
+                <h3>Efficiency Factor</h3>
+                <p>PHEs achieve thermal efficiencies of 80-95%, significantly higher than traditional shell-and-tube designs. The compact design allows for high heat transfer rates with minimal pressure drop.</p>
+            </div>
+        </div>
+
+        <h3>Historical Evolution</h3>
+        <p>Plate heat exchangers were first introduced in the 1930s by ALFA-LAVAL, revolutionizing thermal management in industrial processes. Since then, they've become the standard choice across numerous industries due to their superior efficiency, compact size, and reliability.</p>
+    </section>
+
+    <!-- Advantages Section -->
+    <section id="advantages" class="container">
+        <h2>Key Advantages</h2>
+        
+        <h3>Why Choose Plate Heat Exchangers?</h3>
+        <div class="advantages-list">
+            <div class="advantage-item">
+                <div class="advantage-check">✓</div>
+                <div class="advantage-text">
+                    <strong>High Efficiency</strong><br>
+                    Transfer rates up to 5x higher than shell-and-tube designs
+                </div>
+            </div>
+            <div class="advantage-item">
+                <div class="advantage-check">✓</div>
+                <div class="advantage-text">
+                    <strong>Compact Design</strong><br>
+                    Requires 50-70% less space than traditional heat exchangers
+                </div>
+            </div>
+            <div class="advantage-item">
+                <div class="advantage-check">✓</div>
+                <div class="advantage-text">
+                    <strong>Easy Maintenance</strong><br>
+                    Plates can be easily removed and cleaned or replaced
+                </div>
+            </div>
+            <div class="advantage-item">
+                <div class="advantage-check">✓</div>
+                <div class="advantage-text">
+                    <strong>Cost Effective</strong><br>
+                    Lower initial investment and reduced operational costs
+                </div>
+            </div>
+            <div class="advantage-item">
+                <div class="advantage-check">✓</div>
+                <div class="advantage-text">
+                    <strong>Flexible Configuration</strong><br>
+                    Easy to add or remove plates for capacity adjustment
+                </div>
+            </div>
+            <div class="advantage-item">
+                <div class="advantage-check">✓</div>
+                <div class="advantage-text">
+                    <strong>Minimal Fouling</strong><br>
+                    Turbulent flow reduces deposit accumulation
+                </div>
+            </div>
+        </div>
+
+        <h3>Comparative Analysis</h3>
+        <table class="comparison-table">
+            <tr>
+                <th>Feature</th>
+                <th>Plate Heat Exchanger</th>
+                <th>Shell-and-Tube</th>
+                <th>Spiral</th>
+            </tr>
+            <tr>
+                <td><strong>Efficiency</strong></td>
+                <td>90-95%</td>
+                <td>60-75%</td>
+                <td>75-85%</td>
+            </tr>
+            <tr>
+                <td><strong>Space Required</strong></td>
+                <td>Minimal</td>
+                <td>Large</td>
+                <td>Moderate</td>
+            </tr>
+            <tr>
+                <td><strong>Maintenance</strong></td>
+                <td>Easy</td>
+                <td>Difficult</td>
+                <td>Moderate</td>
+            </tr>
+            <tr>
+                <td><strong>Cost</strong></td>
+                <td>Low-Medium</td>
+                <td>Medium-High</td>
+                <td>Medium</td>
+            </tr>
+            <tr>
+                <td><strong>Pressure Drop</strong></td>
+                <td>Low</td>
+                <td>High</td>
+                <td>Moderate</td>
+            </tr>
+            <tr>
+                <td><strong>Temperature Range</strong></td>
+                <td>-20°C to 200°C</td>
+                <td>-40°C to 250°C</td>
+                <td>-40°C to 200°C</td>
+            </tr>
+        </table>
+    </section>
+
+    <!-- Design Types Section -->
+    <section id="design" class="container">
+        <h2>Design Types & Configurations</h2>
+
+        <h3>Plate Types</h3>
+        <div class="features-grid">
+            <div class="feature-item">
+                <div class="feature-icon">〰️</div>
+                <div class="feature-content">
+                    <h4>Corrugated Plates</h4>
+                    <p>Standard design with diagonal corrugation pattern for enhanced turbulence and heat transfer efficiency</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">⧖</div>
+                <div class="feature-content">
+                    <h4>Herringbone Pattern</h4>
+                    <p>Overlapping corrugations creating highly turbulent flow for maximum thermal performance</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">▦</div>
+                <div class="feature-content">
+                    <h4>Chevron Pattern</h4>
+                    <p>Angular corrugations providing excellent heat transfer with lower pressure drop</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">⋯</div>
+                <div class="feature-content">
+                    <h4>Smooth Plates</h4>
+                    <p>Minimal corrugation for handling viscous fluids and slurries with minimal fouling</p>
+                </div>
+            </div>
+        </div>
+
+        <h3>Common Configurations</h3>
+        <div class="spec-box">
+            <div class="spec-item">
+                <div class="spec-label">Counter-Current Flow</div>
+                <div class="spec-value">Most Efficient ⭐⭐⭐⭐⭐</div>
+                <p>Hot and cold fluids flow in opposite directions, maximizing temperature differential across the length of the exchanger. Achieves the highest thermal efficiency.</p>
+            </div>
+            <div class="spec-item">
+                <div class="spec-label">Co-Current Flow</div>
+                <div class="spec-value">Standard Efficiency ⭐⭐⭐⭐</div>
+                <p>Hot and cold fluids flow in the same direction. Less efficient than counter-current but suitable for specific applications and lower pressure drop requirements.</p>
+            </div>
+            <div class="spec-item">
+                <div class="spec-label">Cross-Flow</div>
+                <div class="spec-value">Hybrid Efficiency ⭐⭐⭐⭐</div>
+                <p>Fluids flow perpendicular to each other, offering a balance between counter-current efficiency and co-current operational flexibility.</p>
+            </div>
+            <div class="spec-item">
+                <div class="spec-label">Multi-Pass Configuration</div>
+                <div class="spec-value">Custom Design ⭐⭐⭐⭐⭐</div>
+                <p>Fluids make multiple passes through the exchanger, increasing residence time and heat transfer capability for specific thermal requirements.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Applications Section -->
+    <section id="applications" class="container">
+        <h2>Industrial Applications</h2>
+        <p>Plate heat exchangers are employed across diverse industries for their superior efficiency and reliability:</p>
+
+        <div class="applications-grid">
+            <div class="app-card">
+                <div class="app-icon">🏭</div>
+                <h4>HVAC Systems</h4>
+                <p>Climate control in residential and commercial buildings. Recovery ventilation, chilled water distribution, and district heating networks.</p>
+            </div>
+            <div class="app-card">
+                <div class="app-icon">🔬</div>
+                <h4>Pharmaceutical</h4>
+                <p>Sterile processes requiring precise temperature control. Used in fermentation, distillation, and cooling of pharmaceutical products.</p>
+            </div>
+            <div class="app-card">
+                <div class="app-icon">🍲</div>
+                <h4>Food & Beverage</h4>
+                <p>Pasteurization, cooling of beverages, dairy processing, and temperature-critical food manufacturing applications.</p>
+            </div>
+            <div class="app-card">
+                <div class="app-icon">🛢️</div>
+                <h4>Petrochemical</h4>
+                <p>Crude oil cooling, heat recovery in refineries, and temperature regulation in chemical processing plants.</p>
+            </div>
+            <div class="app-card">
+                <div class="app-icon">⚡</div>
+                <h4>Power Generation</h4>
+                <p>Condenser units, waste heat recovery systems, and thermal efficiency enhancement in power plants.</p>
+            </div>
+            <div class="app-card">
+                <div class="app-icon">🌡️</div>
+                <h4>Refrigeration</h4>
+                <p>Condenser and evaporator applications in industrial refrigeration systems and cryogenic processes.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Specifications Section -->
+    <section id="technical" class="container">
+        <h2>Technical Specifications & Parameters</h2>
+
+        <h3>Operating Specifications</h3>
+        <div class="spec-box">
+            <div class="spec-item">
+                <div class="spec-label">Temperature Range</div>
+                <div class="spec-value">-20°C to +200°C</div>
+                <p>Standard operational range with specialized designs available for extreme temperatures</p>
+            </div>
+            <div class="spec-item">
+                <div class="spec-label">Design Pressure</div>
+                <div class="spec-value">Up to 30 bar</div>
+                <p>Higher pressure ratings available for demanding applications</p>
+            </div>
+            <div class="spec-item">
+                <div class="spec-label">Plate Area</div>
+                <div class="spec-value">0.5 - 5.0 m²</div>
+                <p>Scalable designs from compact units to large industrial installations</p>
+            </div>
+            <div class="spec-item">
+                <div class="spec-label">Material Compatibility</div>
+                <div class="spec-value">Stainless Steel, Titanium, Copper</div>
+                <p>Select materials based on fluid compatibility and corrosion requirements</p>
+            </div>
+            <div class="spec-item">
+                <div class="spec-label">Heat Transfer Rate</div>
+                <div class="spec-value">U-value: 3000-10000 W/m²K</div>
+                <p>Significantly higher than alternative heat exchanger designs</p>
+            </div>
+            <div class="spec-item">
+                <div class="spec-label">Fouling Factor</div>
+                <div class="spec-value">0.0001-0.0002 m²K/W</div>
+                <p>Low fouling characteristics reduce maintenance frequency</p>
+            </div>
+        </div>
+
+        <h3>Performance Calculations</h3>
+        <div class="code-block">
+            <code>
+// Basic Heat Transfer Equation
+Q = U × A × ΔT_lm
+
+Where:
+Q = Heat transfer rate (W)
+U = Overall heat transfer coefficient (W/m²K)
+A = Heat transfer area (m²)
+ΔT_lm = Logarithmic mean temperature difference (K)
+
+// Log Mean Temperature Difference
+ΔT_lm = (ΔT₁ - ΔT₂) / ln(ΔT₁/ΔT₂)
+
+ΔT₁ = T_hot_in - T_cold_out
+ΔT₂ = T_hot_out - T_cold_in
+
+// Energy Balance (Steady State)
+Q_hot = ṁ_hot × Cp_hot × (T_in - T_out)
+Q_cold = ṁ_cold × Cp_cold × (T_in - T_out)
+            </code>
+        </div>
+
+        <h3>Material Selection Guide</h3>
+        <table class="comparison-table">
+            <tr>
+                <th>Material</th>
+                <th>Temperature Range</th>
+                <th>Corrosion Resistance</th>
+                <th>Cost</th>
+                <th>Best For</th>
+            </tr>
+            <tr>
+                <td>Stainless Steel 304</td>
+                <td>-20°C to +150°C</td>
+                <td>Good</td>
+                <td>Low-Medium</td>
+                <td>Food, HVAC, General Industry</td>
+            </tr>
+            <tr>
+                <td>Stainless Steel 316</td>
+                <td>-20°C to +150°C</td>
+                <td>Excellent</td>
+                <td>Medium</td>
+                <td>Chemical, Marine Applications</td>
+            </tr>
+            <tr>
+                <td>Titanium</td>
+                <td>-40°C to +200°C</td>
+                <td>Superior</td>
+                <td>High</td>
+                <td>Seawater, Aggressive Fluids</td>
+            </tr>
+            <tr>
+                <td>Copper-Nickel</td>
+                <td>-20°C to +180°C</td>
+                <td>Excellent</td>
+                <td>Medium-High</td>
+                <td>Heat Recovery, Cooling</td>
+            </tr>
+        </table>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About PHE Technology</h4>
+                <p>Plate heat exchangers represent the pinnacle of thermal energy transfer efficiency in modern industrial engineering. Their adoption continues to grow across all major industrial sectors.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Key Industries</h4>
+                <ul>
+                    <li>HVAC & Climate Control</li>
+                    <li>Pharmaceutical & Chemical</li>
+                    <li>Food & Beverage Processing</li>
+                    <li>Energy & Power Generation</li>
+                    <li>Marine & Offshore</li>
+                    <li>Industrial Refrigeration</li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="https://www.unitedheatexchangers.com/">United Heat Exchangers</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; United Heat Exchangers Technical Guide. All rights reserved. | Engineered for Excellence</p>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <div class="scroll-top" onclick="scrollToTop()">↑</div>
+
+    <script>
+        // Smooth scroll functionality
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Scroll to top button functionality
+        window.addEventListener('scroll', function() {
+            const scrollTop = document.querySelector('.scroll-top');
+            if (window.pageYOffset > 300) {
+                scrollTop.classList.add('show');
+            } else {
+                scrollTop.classList.remove('show');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Intersection Observer for animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.card, .app-card, .feature-item').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
