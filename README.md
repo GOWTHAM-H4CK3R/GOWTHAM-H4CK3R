@@ -68,4 +68,4 @@ Case-study style experiments
 
 <strong>Email</strong>: gowtham@webbeez.com
 
-<strong>LinkedIn</strong>: [your-linkedin-url](https://www.linkedin.com/in/gowtham-now/)
+<strong>LinkedIn</strong>: [Gowtham Saravanakumar](https://www.linkedin.com/in/gowtham-now/)
