@@ -4,7 +4,7 @@ I’m a detail-oriented professional with a strong focus on quality, precision, 
 
 I value clean workflows, clarity in execution, and consistent improvement. I’m comfortable learning new tools quickly, adapting to project requirements, and delivering results that align with real-world use cases.
 
-🚀 <h2>Core Expertise</h2>
+<h2>Core Expertise</h2>
 
 Technical SEO (site audits, indexing, crawl optimization)
 
@@ -22,7 +22,7 @@ Competitor and SERP analysis
 
 Content optimization for ranking & engagement
 
-🛠 <h2>Tools & Platforms</h2>
+<h2>Tools & Platforms</h2>
 
 Google Analytics (GA4)
 
@@ -38,7 +38,7 @@ Keyword Planner
 
 CMS platforms (WordPress, Shopify)
 
-📈 <h2>Professional Approach</h2>
+<h2>Professional Approach</h2>
 
 Data-driven decision making
 
@@ -50,7 +50,7 @@ Clear reporting and measurable KPIs
 
 Scalable growth strategies
 
-📂 <h2>What You’ll Find Here</h2>
+<h2>What You’ll Find Here</h2>
 
 SEO audit frameworks
 
@@ -62,7 +62,7 @@ Content optimization strategies
 
 Case-study style experiments
 
-📬 <h2>Contact</h2>
+<h2>Contact</h2>
 
 <strong>GitHub</strong>: @your-username
 
